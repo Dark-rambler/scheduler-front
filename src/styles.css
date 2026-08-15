@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0056b3;
+  --color-secondary: #00a3a3;
+  --color-tertiary: #973c00;
+  --color-neutral: #f8f9fa;
+  --font-sans: "Inter", sans-serif;
+}
+
+.cdk-drag-preview {
+  border-radius: 0.5rem;
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.15),
+    0 4px 6px -4px rgb(0 0 0 / 0.15);
+}
+
+.cdk-drag-placeholder {
+  border: 2px dashed #d1d5db;
+  background: transparent;
+  opacity: 0.4;
+}
+
+.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-receiving {
+  background-color: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}

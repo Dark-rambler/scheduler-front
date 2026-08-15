@@ -1,0 +1,30 @@
+<button
+  type="button"
+  (click)="select.emit(day().iso)"
+  class="flex h-20 w-full flex-col items-start gap-1 rounded-lg border p-2 text-left transition-colors {{
+    selected() ? 'border-primary bg-primary/5' : 'border-transparent hover:bg-gray-50'
+  }}"
+>
+  <span
+    class="flex h-6 w-6 items-center justify-center rounded-full text-sm {{
+      day().iso === today
+        ? 'bg-primary font-semibold text-white'
+        : day().inCurrentMonth
+          ? 'text-gray-700'
+          : 'text-gray-300'
+    }}"
+  >
+    {{ day().date.getDate() }}
+  </span>
+
+  @if (appointments().length) {
+    <div class="flex items-center gap-2">
+      <div class="flex gap-1">
+        @for (tone of dotTones(); track tone) {
+          <span class="h-1.5 w-1.5 rounded-full {{ tone }}"></span>
+        }
+      </div>
+      <span class="text-xs text-gray-400">{{ appointments().length }}</span>
+    </div>
+  }
+</button>
