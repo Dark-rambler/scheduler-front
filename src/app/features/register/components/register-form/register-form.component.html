@@ -1,4 +1,4 @@
-<form action="">
+<form [formGroup]="formGroup" action="">
   <div class="h-full py-6 px-14">
     <div class="text-neutral-900 font-semibold text-2xl py-4">
       <div>Crea una cuenta</div>
@@ -12,6 +12,7 @@
         placeholder="Ingresa tu nombre"
         [type]="inputType.TEXT"
         [isRequired]="true"
+        formControlName="name"
         class=""
       />
       <app-input-component
@@ -20,6 +21,7 @@
         [type]="inputType.TEXT"
         [isRequired]="true"
         class="my-2"
+        formControlName="adminName"
       />
       <app-input-component
         label="Email"
@@ -27,6 +29,7 @@
         [type]="inputType.EMAIL"
         [isRequired]="true"
         class="my-2"
+        formControlName="adminEmail"
       />
       <app-input-component
         label="Teléfono"
@@ -34,6 +37,7 @@
         [type]="inputType.TEXT"
         [isRequired]="true"
         class="my-2"
+        formControlName="phoneNumber"
       />
       <app-input-component
         label="Contraseña"
@@ -41,8 +45,9 @@
         [type]="inputType.PASSWORD"
         [isRequired]="true"
         class="my-2"
+        formControlName="adminPassword"
       />
     </div>
-    <app-button-component label="Registrarse" />
+    <app-button-component appClickRegister label="Registrarse" />
   </div>
 </form>

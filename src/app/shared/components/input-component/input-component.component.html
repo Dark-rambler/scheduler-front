@@ -4,7 +4,12 @@
   }}</label>
   <input
     [type]="type()"
-    class="w-full p-2 border border-neutral-400 rounded"
+    class="w-full p-2 border rounded"
+    [ngClass]="errorMessage ? 'border-red-500' : 'border-neutral-400'"
     [placeholder]="placeholder()"
+    [formControl]="control"
   />
+  @if (errorMessage) {
+    <p class="text-red-500 text-sm mt-1">{{ errorMessage }}</p>
+  }
 </div>
