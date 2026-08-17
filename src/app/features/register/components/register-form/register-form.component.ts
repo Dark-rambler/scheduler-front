@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { InputComponentComponent } from "../../../../shared/input-component/input-component.component";
-import { InputType } from '../../../../shared/input-component/enums/input-type.enum';
-import { SelectComponentComponent } from "../../../../shared/select-component/select-component.component";
-import { ButtonComponentComponent } from "../../../../shared/button-component/button-component.component";
+import { InputComponentComponent } from '../../../../shared/components/input-component/input-component.component';
+import { SelectComponentComponent } from '../../../../shared/components/select-component/select-component.component';
+import { ButtonComponentComponent } from '../../../../shared/components/button-component/button-component.component';
+import { InputType } from '../../../../shared/components/input-component/enums/input-type.enum';
 
 @Component({
   selector: 'app-register-form',
-  imports: [InputComponentComponent, SelectComponentComponent, ButtonComponentComponent],
+  imports: [InputComponentComponent, ButtonComponentComponent],
   templateUrl: './register-form.component.html',
 })
 export class RegisterFormComponent {
