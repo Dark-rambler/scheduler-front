@@ -1,0 +1,10 @@
+<div class="my-2">
+  <label [ngClass]="{ required: isRequired() }" for="input">{{
+    label()
+  }}</label>
+  <input
+    [type]="type()"
+    class="w-full p-2 border border-neutral-400 rounded"
+    [placeholder]="placeholder()"
+  />
+</div>
