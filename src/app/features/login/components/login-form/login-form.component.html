@@ -1,0 +1,36 @@
+<form action="" [formGroup]="form">
+  <div class="h-full py-6 px-14">
+    <div class="text-neutral-900 font-semibold text-2xl py-4">
+      <div>Inicia Sesión</div>
+      <div class="text-sm font-thin">
+        Inicia sesion para acceder a tu cuenta
+      </div>
+    </div>
+    <div class="py-4">
+      <app-input-component
+        label="email"
+        placeholder="Ingresa tu email"
+        [type]="inputType.EMAIL"
+        [isRequired]="true"
+        class="my-2"
+        formControlName="email"
+      />
+      <app-input-component
+        label="Contraseña"
+        placeholder="Ingresa tu contraseña"
+        [type]="inputType.PASSWORD"
+        [isRequired]="true"
+        class="my-2"
+        formControlName="password"
+      />
+    </div>
+    <div class="w-full flex justify-center">
+      <div class="flex flex-col items-center">
+      <app-button-component appClickLogin label="Ingresa" />
+      <span class="p-3 font-bold"> O si no tienes cuenta</span>
+      <app-button-component label="Registrarse" (click)="navigate($event)" />
+
+      </div>
+    </div>
+  </div>
+</form>
