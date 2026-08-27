@@ -1,18 +1,16 @@
-<form action="" [formGroup]="form">
-  <div class="h-full py-6 px-14">
-    <div class="text-neutral-900 font-semibold text-2xl py-4">
-      <div>Inicia Sesión</div>
-      <div class="text-sm font-thin">
-        Inicia sesion para acceder a tu cuenta
-      </div>
+<form action="" [formGroup]="form" class="w-full max-w-sm">
+  <div class="rounded-2xl border border-gray-100 bg-white p-8 shadow-xl shadow-gray-900/5">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">Inicia Sesión</h1>
+      <p class="mt-1 text-sm text-gray-500">Ingresa tus credenciales para acceder a tu cuenta</p>
     </div>
-    <div class="py-4">
+
+    <div class="space-y-4">
       <app-input-component
-        label="email"
-        placeholder="Ingresa tu email"
+        label="Correo electrónico"
+        placeholder="tucorreo@clinica.com"
         [type]="inputType.EMAIL"
         [isRequired]="true"
-        class="my-2"
         formControlName="email"
       />
       <app-input-component
@@ -20,17 +18,18 @@
         placeholder="Ingresa tu contraseña"
         [type]="inputType.PASSWORD"
         [isRequired]="true"
-        class="my-2"
         formControlName="password"
       />
     </div>
-    <div class="w-full flex justify-center">
-      <div class="flex flex-col items-center">
-      <app-button-component appClickLogin label="Ingresa" />
-      <span class="p-3 font-bold"> O si no tienes cuenta</span>
-      <app-button-component label="Registrarse" (click)="navigate($event)" />
 
-      </div>
+    <app-button-component appClickLogin label="Ingresar" [fullWidth]="true" class="mt-6" />
+
+    <div class="mt-6 flex items-center gap-3">
+      <span class="h-px flex-1 bg-gray-200"></span>
+      <span class="text-xs text-gray-400">¿No tienes cuenta?</span>
+      <span class="h-px flex-1 bg-gray-200"></span>
     </div>
+
+    <app-button-component label="Crear cuenta" variant="outlined" [fullWidth]="true" (click)="navigate($event)" class="mt-4" />
   </div>
 </form>

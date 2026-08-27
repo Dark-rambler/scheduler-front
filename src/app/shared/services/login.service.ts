@@ -12,6 +12,6 @@ export class LoginService {
   private readonly _http = inject(HttpClient);
 
   public login(credentials: loginRequest): Observable<loginResponse> {
-    return this._http.post<loginResponse>(`${this.url}auth/login`, credentials)
+    return this._http.post<loginResponse>(`auth/login`, credentials)
   }
 }
