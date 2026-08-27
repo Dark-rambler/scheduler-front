@@ -8,7 +8,7 @@ import { LoginFormComponent } from "./components/login-form/login-form.component
 
 @Component({
   selector: 'app-login',
-  imports: [InputComponentComponent, ButtonComponentComponent, BannerComponent, RegisterFormComponent, LoginFormComponent],
+  imports: [ BannerComponent, LoginFormComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -1,10 +1,12 @@
-<div class="p-2 h-full relative">
-  <div class="h-full blur-sm">
-    <img
-      src="images/medical-center.jpg"
-      class="w-full h-full object-cover"
-      alt=""
-    />
+<div class="relative h-full p-2">
+  <div class="h-full overflow-hidden rounded-2xl">
+    <img src="images/medical-center.jpg" class="h-full w-full object-cover blur-sm" alt="" />
+    <div class="absolute inset-2 rounded-2xl bg-linear-to-t from-black/50 via-black/10 to-transparent"></div>
+  </div>
+
+  <div class="absolute left-8 top-8 flex items-center gap-2 text-white">
+    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 text-sm font-bold backdrop-blur-sm">CF</div>
+    <span class="text-lg font-semibold">ClinicFlow</span>
   </div>
 
   <div class="absolute inset-2 flex items-center justify-center p-6">
@@ -14,20 +16,7 @@
       <div
         class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10"
       >
-        <svg
-          class="h-6 w-6 text-primary"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 6v6l4 2"
-          />
-          <circle cx="12" cy="12" r="9" />
-        </svg>
+        <app-icon name="login" class="h-6 w-6 text-primary" />
       </div>
       <h2 class="mb-2 text-2xl font-bold text-neutral-900">Bienvenido</h2>
       <p class="text-neutral-600">

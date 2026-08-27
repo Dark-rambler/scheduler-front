@@ -25,9 +25,37 @@ export class AuthService {
       .pipe(
         tap((token) => this.decodeToken(token.token)),
         tap((token) => this._saveToken(token.token)),
-        tap(() => this._router.navigate(['./board']))
+        tap(() => this._router.navigate(['./clinic-options']))
       )
       .subscribe();
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    this._router.navigate(['./login'])
+  }
+
+  public isTokenExpired(token: string): boolean {
+    let decoded: TokenPayload;
+
+    try {
+      decoded = jwtDecode<TokenPayload>(token);
+    } catch {
+      return true;
+    }
+
+    if (!decoded.exp) {
+      return true;
+    }
+
+    const expirationDate = decoded.exp * 1000;
+
+    return Date.now() >= expirationDate;
   }
 
   private _saveToken(token: string) {

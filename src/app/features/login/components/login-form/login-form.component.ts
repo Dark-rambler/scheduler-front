@@ -10,7 +10,8 @@ import { ClickLoginDirective } from "../../directives/click-login.directive";
   selector: 'app-login-form',
   imports: [ButtonComponentComponent, InputComponentComponent, ClickLoginDirective, ReactiveFormsModule],
   templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.scss'
+  styleUrl: './login-form.component.scss',
+  host: { class: 'flex h-full items-center justify-center px-6' }
 })
 export class LoginFormComponent {
   protected inputType = InputType;
