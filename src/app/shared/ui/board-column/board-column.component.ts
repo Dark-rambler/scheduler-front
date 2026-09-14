@@ -8,7 +8,7 @@ import { BoardColumn } from '../../../core/models/board.model';
   selector: 'app-board-column',
   imports: [CdkDropList, CdkDrag, BoardCardComponent],
   templateUrl: './board-column.component.html',
-  host: { class: 'flex w-72 shrink-0 flex-col rounded-xl border border-gray-200 bg-white shadow-sm' }
+  host: { class: 'glass-panel flex w-80 shrink-0 flex-col rounded-3xl' }
 })
 export class BoardColumnComponent {
   column = input.required<BoardColumn>();

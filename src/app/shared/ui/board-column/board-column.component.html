@@ -1,7 +1,7 @@
-<div class="flex shrink-0 items-center gap-2 border-b border-gray-100 px-4 py-3">
-  <span class="h-2 w-2 rounded-full" [class]="column().accentClass"></span>
-  <h2 class="text-sm font-semibold text-gray-700">{{ column().title }}</h2>
-  <span class="ml-auto rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
+<div class="flex shrink-0 items-center gap-2.5 px-5 py-4">
+  <span class="h-2.5 w-2.5 rounded-full" [class]="column().accentClass"></span>
+  <h2 class="text-base font-bold text-gray-800">{{ column().title }}</h2>
+  <span class="ml-auto rounded-full bg-gray-900/[0.06] px-2.5 py-0.5 text-xs font-bold text-gray-600">
     {{ column().appointments.length }}
   </span>
 </div>
@@ -11,12 +11,12 @@
   [id]="column().id"
   [cdkDropListData]="column().appointments"
   (cdkDropListDropped)="dropped.emit($event)"
-  class="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto rounded-b-xl bg-gray-50/60 p-3"
+  class="flex min-h-0 flex-1 flex-col gap-3.5 overflow-y-auto px-4 pb-4 pt-2"
 >
   @for (appointment of column().appointments; track appointment.id) {
     <app-board-card cdkDrag [appointment]="appointment" />
   } @empty {
-    <div class="flex flex-1 items-center justify-center rounded-lg border border-dashed border-gray-200 py-6 text-xs text-gray-400">
+    <div class="flex flex-1 items-center justify-center rounded-2xl border-2 border-dashed border-gray-900/10 py-8 text-sm font-medium text-gray-400">
       No appointments
     </div>
   }

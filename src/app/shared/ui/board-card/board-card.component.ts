@@ -1,7 +1,7 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { BadgeComponent } from '../badge/badge.component';
 import { Appointment } from '../../../core/models/appointment.model';
-import { PRIORITY_BORDER, PRIORITY_LABEL, PRIORITY_TONE } from '../../../core/models/priority.util';
+import { PRIORITY_LABEL, PRIORITY_TONE, PRIORITY_VARIANT } from '../../../core/models/priority.util';
 
 @Component({
   selector: 'app-board-card',
@@ -14,5 +14,5 @@ export class BoardCardComponent {
 
   protected readonly priorityLabel = PRIORITY_LABEL;
   protected readonly priorityTone = PRIORITY_TONE;
-  protected readonly borderClass = computed(() => PRIORITY_BORDER[this.appointment().priority]);
+  protected readonly priorityVariant = PRIORITY_VARIANT;
 }

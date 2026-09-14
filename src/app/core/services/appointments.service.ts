@@ -21,10 +21,10 @@ export class AppointmentsService {
         {
           id: 'checked-in',
           title: 'Checked In',
-          accentClass: 'bg-tertiary',
+          accentClass: 'bg-secondary',
           appointments: [{ id: 'PT-850', patientName: 'Maria Garcia', reason: 'Severe Pain Consult', priority: 'high', waitMinutes: 15 }]
         },
-        { id: 'in-consultation', title: 'In Consultation', accentClass: 'bg-secondary', appointments: [] },
+        { id: 'in-consultation', title: 'In Consultation', accentClass: 'bg-tertiary', appointments: [] },
         { id: 'completed', title: 'Completed', accentClass: 'bg-gray-400', appointments: [] }
       ]
     },

@@ -21,7 +21,7 @@ const SOLID_CLASSES: Record<BadgeTone, string> = {
 
 @Component({
   selector: 'app-badge',
-  template: `<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium" [class]="classes()">
+  template: `<span class="inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold" [class]="classes()">
     <ng-content />
   </span>`
 })
