@@ -1,22 +1,49 @@
-/** Matches the backend AppointmentStatus enum (see GET /api/appointments/board). */
 export type AppointmentStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED';
 
-/** Shape returned per item by GET /api/appointments/board — no id on the backend summary yet. */
-export interface BoardAppointment {
-  id: string;
+export interface AppointmentResponse {
+  id: number;
+  status: string;
+  clientId: number;
   clientName: string;
-  doctorName?: string;
-  /** ISO yyyy-mm-dd */
-  appointmentDate: string;
-  /** Formatted "hh:mm a", e.g. "02:30 PM" — same format the backend returns. */
-  appointmentTime: string;
-  status: AppointmentStatus;
+  clientEmail: string;
+  doctorId: number;
+  doctorName: string;
+  doctorEmail: string;
+  doctorSpecialty: string;
+  scheduleId: number;
+  scheduleStart: string;
+  scheduleEnd: string;
+  createdAt: string;
 }
 
-/** One Kanban column. The board only ever has the 3 backend statuses — no custom workflows. */
+export interface Page<T> {
+  content: T[];
+  page: { size: number; number: number; totalElements: number; totalPages: number };
+}
+
+export interface BoardAppointment {
+  id: number;
+  status: AppointmentStatus;
+  clientName: string;
+  clientEmail: string;
+  doctorName: string;
+  doctorEmail: string;
+  doctorSpecialty: string;
+  appointmentDate: string;
+  appointmentTime: string;
+  endTime: string;
+  createdAt: string;
+}
+
 export interface BoardColumn {
   id: AppointmentStatus;
   title: string;
   accentClass: string;
   appointments: BoardAppointment[];
 }
+
+export const ALLOWED_TRANSITIONS: Record<AppointmentStatus, AppointmentStatus[]> = {
+  PENDING: ['CONFIRMED', 'CANCELLED'],
+  CONFIRMED: ['CANCELLED'],
+  CANCELLED: []
+};

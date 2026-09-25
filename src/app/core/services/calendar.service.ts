@@ -1,12 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Appointment } from '../models/appointment.model';
-import { toIso } from '../utils/calendar.util';
-
-function addDays(base: Date, days: number): Date {
-  const date = new Date(base);
-  date.setDate(date.getDate() + days);
-  return date;
-}
+import { addDays, toIso } from '../utils/calendar.util';
 
 const TODAY = new Date();
 
@@ -59,7 +53,6 @@ const MOCK_APPOINTMENTS: Appointment[] = [
   }
 ];
 
-/** Mock data source. Swap the body for an HTTP call once the API exists. */
 @Injectable({ providedIn: 'root' })
 export class CalendarService {
   private readonly _appointments = signal<Appointment[]>(MOCK_APPOINTMENTS);

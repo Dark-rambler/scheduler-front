@@ -56,7 +56,7 @@ Mock original simulaba 3 "workflows" con columnas libres y tarjetas con `priorit
 - `shared/ui/board-column` — tipado a `BoardAppointment` (`Appointment` con `priority`/`reason` sigue existiendo solo para `calendar`).
 - `features/board/board.component.ts` — columnas fijas (`COLUMN_DEFS`: Pending/Confirmed/Cancelled) filtradas por `dateFrom`/`dateTo`.
 
-Drag-and-drop entre columnas no persiste a backend (mock, no regresión). Board sigue en datos mock.
+Actualizado: board conectado al backend real, ver [[frontend/board-integration]].
 
 ## Shell — layout centrado + topbar como pieza del sistema
 
@@ -92,4 +92,3 @@ Verificado en browser: las 4 esquinas de septiembre 2026 (31, 6, 5, 11) con anil
 - Validación del formulario del modal no muestra mensajes de error en UI (gap preexistente).
 - `calendar` no usa `date-range-picker` (sigue con `calendar-nav` propio) — fuera de scope, no se pidió.
 - Board no filtra por `doctorId`/`patientId` aún.
-- Board sigue en datos mock, no conectado a `GET /api/appointments/board` real.
