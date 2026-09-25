@@ -1,0 +1,60 @@
+<div class="glass-modal w-[26rem] rounded-3xl p-6">
+  <div class="mb-1 flex items-start justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-extrabold text-gray-900">{{ appointment.clientName }}</h2>
+      <p class="text-sm font-medium text-gray-500">{{ dayLabel() }} · {{ appointment.appointmentTime }} – {{ endTimeLabel() }}</p>
+    </div>
+    <button
+      type="button"
+      (click)="close()"
+      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl text-gray-400 transition-colors hover:bg-white/60 hover:text-gray-600"
+      aria-label="Close"
+    >
+      <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <app-badge [tone]="statusTone()" class="mt-2 inline-block">{{ appointment.status }}</app-badge>
+
+  <div class="mt-5 space-y-4">
+    <div>
+      <p class="text-xs font-bold tracking-wide text-gray-500">Patient</p>
+      <p class="text-sm font-semibold text-gray-800">{{ appointment.clientName }}</p>
+      <p class="text-sm text-gray-500">{{ appointment.clientEmail }}</p>
+    </div>
+
+    <div>
+      <p class="text-xs font-bold tracking-wide text-gray-500">Doctor</p>
+      <p class="text-sm font-semibold text-gray-800">{{ appointment.doctorName }}</p>
+      <p class="text-sm text-gray-500">{{ appointment.doctorSpecialty }} · {{ appointment.doctorEmail }}</p>
+    </div>
+
+    <div>
+      <p class="text-xs font-bold tracking-wide text-gray-500">Booked</p>
+      <p class="text-sm text-gray-500">{{ appointment.createdAt }}</p>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end gap-2.5">
+    @if (allowedActions().includes('CANCELLED')) {
+      <button
+        type="button"
+        (click)="close('cancel')"
+        class="glass-panel rounded-2xl px-5 py-2.5 text-sm font-bold text-red-600 transition-colors hover:bg-white/70"
+      >
+        Cancel appointment
+      </button>
+    }
+    @if (allowedActions().includes('CONFIRMED')) {
+      <button
+        type="button"
+        (click)="close('confirm')"
+        class="rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/30 transition-colors hover:bg-primary/90"
+      >
+        Confirm
+      </button>
+    }
+  </div>
+</div>
