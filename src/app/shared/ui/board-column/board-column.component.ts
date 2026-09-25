@@ -1,8 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { BoardCardComponent } from '../board-card/board-card.component';
-import { Appointment } from '../../../core/models/appointment.model';
-import { BoardColumn } from '../../../core/models/board.model';
+import { BoardAppointment, BoardColumn } from '../../../core/models/board.model';
 
 @Component({
   selector: 'app-board-column',
@@ -12,5 +11,5 @@ import { BoardColumn } from '../../../core/models/board.model';
 })
 export class BoardColumnComponent {
   column = input.required<BoardColumn>();
-  dropped = output<CdkDragDrop<Appointment[]>>();
+  dropped = output<CdkDragDrop<BoardAppointment[]>>();
 }

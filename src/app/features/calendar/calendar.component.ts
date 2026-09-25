@@ -1,14 +1,16 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
 import { CalendarDayCellComponent } from '../../shared/ui/calendar-day-cell/calendar-day-cell.component';
-import { AppointmentListItemComponent } from '../../shared/ui/appointment-list-item/appointment-list-item.component';
+import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+import { CalendarNavComponent } from '../../shared/ui/calendar-nav/calendar-nav.component';
+import { DayAgendaPanelComponent } from '../../shared/ui/day-agenda-panel/day-agenda-panel.component';
 import { NewAppointmentDialogComponent, NewAppointmentResult } from '../../shared/ui/new-appointment-dialog/new-appointment-dialog.component';
 import { CalendarService } from '../../core/services/calendar.service';
 import { buildMonthMatrix, formatDayLabel, formatMonthLabel, toIso } from '../../core/utils/calendar.util';
 
 @Component({
   selector: 'app-calendar',
-  imports: [CalendarDayCellComponent, AppointmentListItemComponent],
+  imports: [CalendarDayCellComponent, PageHeaderComponent, CalendarNavComponent, DayAgendaPanelComponent],
   templateUrl: './calendar.component.html',
   host: { class: 'flex min-h-0 flex-1 flex-col' }
 })
@@ -57,7 +59,8 @@ export class CalendarComponent {
 
   protected openNewAppointment(): void {
     const dialogRef = this.dialog.open<NewAppointmentResult>(NewAppointmentDialogComponent, {
-      data: { dayLabel: this.selectedDayLabel() }
+      data: { dayLabel: this.selectedDayLabel() },
+      backdropClass: 'glass-backdrop'
     });
 
     dialogRef.closed.subscribe((result) => {

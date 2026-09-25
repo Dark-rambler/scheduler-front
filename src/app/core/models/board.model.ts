@@ -1,16 +1,22 @@
-import { Appointment } from './appointment.model';
+/** Matches the backend AppointmentStatus enum (see GET /api/appointments/board). */
+export type AppointmentStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED';
 
-/** One step of a workflow. Workflows are free to define as many (or as few) as they need. */
-export interface BoardColumn {
+/** Shape returned per item by GET /api/appointments/board — no id on the backend summary yet. */
+export interface BoardAppointment {
   id: string;
-  title: string;
-  accentClass: string;
-  appointments: Appointment[];
+  clientName: string;
+  doctorName?: string;
+  /** ISO yyyy-mm-dd */
+  appointmentDate: string;
+  /** Formatted "hh:mm a", e.g. "02:30 PM" — same format the backend returns. */
+  appointmentTime: string;
+  status: AppointmentStatus;
 }
 
-/** A full pipeline (e.g. "Oncology Dept", "Urgent Care") made of an arbitrary number of steps. */
-export interface Workflow {
-  id: string;
-  name: string;
-  columns: BoardColumn[];
+/** One Kanban column. The board only ever has the 3 backend statuses — no custom workflows. */
+export interface BoardColumn {
+  id: AppointmentStatus;
+  title: string;
+  accentClass: string;
+  appointments: BoardAppointment[];
 }
