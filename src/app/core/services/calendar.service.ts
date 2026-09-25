@@ -1,12 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Appointment } from '../models/appointment.model';
-import { toIso } from '../utils/calendar.util';
-
-function addDays(base: Date, days: number): Date {
-  const date = new Date(base);
-  date.setDate(date.getDate() + days);
-  return date;
-}
+import { addDays, toIso } from '../utils/calendar.util';
 
 const TODAY = new Date();
 

@@ -17,6 +17,12 @@ export function parseIso(iso: string): Date {
   return new Date(year, month - 1, day);
 }
 
+export function addDays(base: Date, days: number): Date {
+  const date = new Date(base);
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
 /** Always returns 6 full weeks (Mon-Sun) so the grid height stays stable across months. */
 export function buildMonthMatrix(year: number, month: number): CalendarDay[][] {
   const firstOfMonth = new Date(year, month, 1);
