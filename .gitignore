@@ -42,3 +42,5 @@ temp_interactive_push.bat
 .gitignore
 .waqwaq/tokens.json
 .waqwaq/proposals/
+.vscode
+graphify-out/
