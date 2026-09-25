@@ -53,7 +53,6 @@ const MOCK_APPOINTMENTS: Appointment[] = [
   }
 ];
 
-/** Mock data source. Swap the body for an HTTP call once the API exists. */
 @Injectable({ providedIn: 'root' })
 export class CalendarService {
   private readonly _appointments = signal<Appointment[]>(MOCK_APPOINTMENTS);

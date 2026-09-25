@@ -13,7 +13,6 @@ import { BoardDevAuthService } from './board-dev-auth.service';
 import { ConfirmDialogComponent } from '../../shared/ui/confirm-dialog/confirm-dialog.component';
 import { AppointmentDetailAction, AppointmentDetailDialogComponent } from '../../shared/ui/appointment-detail-dialog/appointment-detail-dialog.component';
 
-/** The board only ever has these 3 columns — they mirror the backend AppointmentStatus enum. */
 const COLUMN_DEFS: { id: AppointmentStatus; title: string; accentClass: string }[] = [
   { id: 'PENDING', title: 'Pending', accentClass: 'bg-tertiary' },
   { id: 'CONFIRMED', title: 'Confirmed', accentClass: 'bg-primary' },

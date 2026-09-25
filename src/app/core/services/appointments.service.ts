@@ -6,7 +6,7 @@ import { formatTime } from '../utils/calendar.util';
 
 const PAGE_SIZE = 100;
 
-/** AppointmentMapper serializes status via AppointmentStatus.getDisplayName() — Spanish labels, not the enum name. */
+// backend sends display labels, not enum names
 const STATUS_BY_LABEL: Record<string, AppointmentStatus> = {
   Pendiente: 'PENDING',
   Confirmado: 'CONFIRMED',
@@ -33,7 +33,6 @@ function toBoardAppointment(r: AppointmentResponse): BoardAppointment {
 export class AppointmentsService {
   private readonly http = inject(HttpClient);
 
-  /** GET /api/appointments, paginated — has no date filter, so every page is fetched and merged. */
   getAll(): Observable<BoardAppointment[]> {
     return this.http.get<Page<AppointmentResponse>>('appointments', { params: { page: 0, size: PAGE_SIZE } }).pipe(
       expand((page) =>
@@ -46,12 +45,10 @@ export class AppointmentsService {
     );
   }
 
-  /** PATCH /api/appointments/{id}/confirm — only valid from PENDING. */
   confirm(id: number): Observable<BoardAppointment> {
     return this.http.patch<AppointmentResponse>(`appointments/${id}/confirm`, {}).pipe(map(toBoardAppointment));
   }
 
-  /** PATCH /api/appointments/{id}/cancel — valid from PENDING or CONFIRMED, releases the schedule slot. */
   cancel(id: number): Observable<BoardAppointment> {
     return this.http.patch<AppointmentResponse>(`appointments/${id}/cancel`, {}).pipe(map(toBoardAppointment));
   }
