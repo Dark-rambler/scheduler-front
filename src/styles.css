@@ -83,15 +83,15 @@ app-board-card:nth-of-type(3n+3) {
   pointer-events: none;
 }
 
-/* Modal surface: same glass language as glass-panel, more opaque for legibility over a blurred backdrop. */
+/* Modal surface: same glass language as glass-card, tuned for a form (needs a bit more legibility than a board card). */
 .glass-modal {
-  background: rgb(255 255 255 / 85%);
+  background: rgb(255 255 255 / 72%);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgb(255 255 255 / 80%);
+  border: 1px solid rgb(255 255 255 / 85%);
   box-shadow:
     0 24px 60px -12px rgb(15 23 42 / 35%),
-    inset 0 1px 0 rgb(255 255 255 / 70%);
+    inset 0 1px 0 rgb(255 255 255 / 75%);
 }
 
 .glass-backdrop {

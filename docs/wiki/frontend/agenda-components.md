@@ -26,13 +26,25 @@ Segmentación del mockup glass-ui (rama `glass-ui`) del módulo agendar cita en 
 - **`segmented-tabs`** (`shared/ui/segmented-tabs`) — switcher de pastillas genérico `{id, label}[]`. No se usa actualmente, se deja como pieza reutilizable.
 - **`calendar-nav`** (`shared/ui/calendar-nav`) — grupo prev/next/today del calendario.
 - **`day-agenda-panel`** (`shared/ui/day-agenda-panel`) — panel lateral del calendario.
-- **`sidebar-nav`** (`shared/ui/sidebar-nav`) — sidebar del shell. Ancho `w-72` (288px, antes `w-64`/256px) — pedido explícito para que se vea "más grueso"/limpio.
+- **`sidebar-nav`** (`shared/ui/sidebar-nav`) — sidebar del shell. Ancho `w-72` (288px, antes `w-64`/256px).
 - **`topbar`** (`shared/ui/topbar`) — barra superior del shell.
 - **`date-range-picker`** (`shared/ui/date-range-picker`) — ver sección propia abajo.
 
-## Modal (`new-appointment-dialog`) — restyle a glass
+## Modal (`new-appointment-dialog`) — restyle a glass (dos rondas)
 
-Único componente fuera de la línea gráfica original. `styles.css` ganó `.glass-modal` (superficie opaca 85%, blur 24px, reutilizada también por el popover de `date-range-picker`) y `.glass-backdrop` (dim+blur propio para CDK Dialog, vía `backdropClass: 'glass-backdrop'` en `calendar.component.ts`). Formulario reescrito con inputs/botones glass. Sin cambios de comportamiento.
+### Ronda 1 (primer restyle)
+Único componente fuera de la línea gráfica original (blanco opaco, `rounded-xl`, inputs planos). `styles.css` ganó `.glass-modal` y `.glass-backdrop`. Formulario reescrito con clases glass. Sin cambios de comportamiento.
+
+### Ronda 2 (esta sesión — "los modals no están quedando bien")
+Tras revisar en browser, el restyle de ronda 1 seguía viéndose plano: `.glass-modal` al 85% de opacidad blanca es casi opaco, apenas deja ver/desenfocar color detrás — se percibe como card blanco sólido, no "glass" (confirmado comparando el modal del formulario, que tiene `.glass-backdrop` oscureciendo detrás, contra el popover del `date-range-picker`, que usa la misma clase `.glass-modal` pero sin backdrop oscuro — **ambos** se veían igual de planos, descartando el backdrop como causa; el problema era la opacidad del propio `.glass-modal`).
+
+Además los inputs (`bg-white/60 border-white/70`) eran casi invisibles: blanco sobre un modal casi-blanco, con borde al 70% de opacidad blanca — sin contraste real, los campos se confundían con la tarjeta.
+
+Fixes:
+- `.glass-modal` en `styles.css`: opacidad bajada de 85% a **72%** (más cerca de `.glass-card`, 68%, que sí se ve translúcida en el resto de la app), border subido a 85% para mantener definición del borde.
+- Inputs/select del formulario: de `bg-white/60 border-white/70` (blanco sobre blanco, invisible) a **`bg-gray-900/[0.04] border-gray-900/10` + `shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)]`** — campo gris tenue "recesado" con sombra interior, se distingue claramente del card sin romper el minimalismo. En foco: `focus:bg-white focus:border-primary/40 focus:shadow-none` + el ring ya existente — el campo "sale" a blanco sólido al escribir, look premium común en formularios minimal (iOS/macOS-style).
+
+Verificado en browser: modal del calendario (`New Appointment`) y popover del `date-range-picker` (mismo `.glass-modal`) — campos ahora se leen como pozos recesados distintos del card, focus state pasa a blanco con ring azul, texto legible en todo momento.
 
 ## Board (`/board`) — limpieza según swagger
 
@@ -58,16 +70,20 @@ Se construyó propio (no se instaló librería: el proyecto ya tenía el motor d
 - Popover `glass-modal` anclado bajo el trigger, cierra con capa `fixed inset-0` invisible (mismo patrón que `shared/components/select-component`, sin `@angular/cdk/overlay`).
 - Selección estilo Airbnb: 1er click fija inicio (popover sigue abierto, hover-preview del rango), 2do click fija fin y cierra+aplica solo; si el 2do click es anterior al 1ro se invierten. Click repetido reinicia a un solo día.
 - Presets: "Today", "Next 7 days", "This month".
-- Ubicación final: chip con fondo `bg-gray-900/[0.05]` en línea junto al título "Appointments" (`page-header`'s slot `[titleAccessory]`, `flex items-center gap-3`), tras iterar por: pill pesado a la derecha → texto plano debajo (invisible) → chip debajo (visible pero separado) → chip en línea junto al título (final).
+- Ubicación final: chip con fondo `bg-gray-900/[0.05]` en línea junto al título "Appointments" (`page-header`'s slot `[titleAccessory]`).
 
 ## Fixes de recorte por `overflow` (esquinas del calendario + hover de cards)
 
-Dos contenedores con `overflow-y-auto` cortaban el `box-shadow` de sus hijos porque no tenían margen de holgura: el navegador clipea en el borde exacto del *padding box*, y un anillo/sombra que sobresale del último elemento de una fila/columna se corta ahí mismo.
+Dos contenedores con `overflow-y-auto` cortaban el `box-shadow` de sus hijos porque no tenían margen de holgura (el navegador clipea en el borde del *padding box*, y `overflow-y-auto` vuelve el `overflow-x` efectivo `auto` también por spec CSS).
 
-- **Grilla de días de `/calendar`** (`calendar.component.html`): el anillo de selección (`shadow-[0_0_0_2px_var(--color-primary),...]` en `calendar-day-cell`) se cortaba en las celdas de las 4 esquinas de la grilla de 6 semanas. La grilla tiene `overflow-y-auto`, y por spec CSS eso vuelve el `overflow-x` efectivo `auto` también (deja de ser `visible`), así que clipea en ambos ejes. Fix: `-m-2 ... p-2` en el contenedor (`grid min-h-0 flex-1 grid-cols-7 grid-rows-6 gap-2.5 overflow-y-auto`) — margen negativo + padding del mismo tamaño no mueve el contenido (se cancelan), pero mueve el punto de clip 8px más afuera, dando margen para que el anillo respire. Alineación con la fila de labels (MON/TUE/…) arriba, que no tiene este ajuste, se preserva exactamente por la misma razón (el contenido real queda en la misma posición).
-- **Lista de citas del día en `day-agenda-panel`**: la primera card se cortaba un poco al hacer hover porque `.glass-card:hover` (en `styles.css`) aplica `translateY(-6px) scale(1.02)` + sombra más grande, y el contenedor scrollable solo tenía `pt-1.5` (6px) de aire. Mismo fix: `-m-2 ... p-2 pt-3.5` (el `pt-3.5` en vez de `p-2` parejo preserva el gap visual original de 6px contra el header del panel, ya que `-mt-2` + `pt-3.5` = +6px netos, igual que antes, pero con 8px de buffer real antes del punto de clip).
+- **Grilla de días de `/calendar`**: anillo de selección se cortaba en las 4 esquinas. Fix: `-m-2 ... p-2` (margen negativo + padding igual, cancela el desplazamiento visual pero mueve el punto de clip 8px más afuera).
+- **Lista de citas del día en `day-agenda-panel`**: primera card se cortaba al hacer hover (`.glass-card:hover` levanta `-6px` + sombra mayor). Mismo truco, `pt-3.5` en vez de `p-2` parejo para conservar el gap visual original.
 
-Verificado en browser: las 4 esquinas de septiembre 2026 (31, 6, 5, 11) muestran el anillo completo al seleccionarse; hover sobre la primera card del panel lateral ya no se corta contra el header.
+Verificado en browser: las 4 esquinas de septiembre 2026 (31, 6, 5, 11) con anillo completo; hover de la primera card ya no se corta.
+
+## Sobre `docs/` — dejó de ser un repo git anidado
+
+`docs/` (este wiki) era un repo git separado (`docs/.git`), sin remote, trackeado como gitlink roto (sin `.gitmodules` real) dentro de `scheduler-front`. Se unificó: se borró `docs/.git` y se re-trackeeron los archivos como parte normal del repo principal (`git rm --cached -f docs && rm -rf docs/.git && git add docs`). `docs/.gitignore` (que excluye `.waqwaq/tokens.json` y `.waqwaq/proposals/`) sigue aplicando igual aunque el archivo en sí está ignorado por una regla global `.gitignore` del repo padre. Pendiente de confirmar en la práctica: si el propio server de wiki intenta comitear internamente al escribir páginas, ahora ese commit cae en el `.git` del proyecto principal en vez de uno separado — a vigilar que no arrastre cambios de la app que estén *staged* sin commitear en ese momento.
 
 ## Pendiente / no tocado
 
