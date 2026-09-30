@@ -13,7 +13,6 @@ interface DayState {
   isToday: boolean;
 }
 
-/** Airbnb-style range popover for the backend's ?from&to filters — replaces raw native date inputs. */
 @Component({
   selector: 'app-date-range-picker',
   imports: [],

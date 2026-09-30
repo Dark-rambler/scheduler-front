@@ -8,7 +8,6 @@ export interface Appointment {
   time?: string;
   doctor?: string;
   waitMinutes?: number;
-  /** ISO yyyy-mm-dd — set on appointments that belong to a calendar day. */
   date?: string;
   durationMinutes?: number;
 }
