@@ -8,6 +8,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'board', pathMatch: 'full' },
       { path: 'board', loadComponent: () => import('./features/board/board.component').then((m) => m.BoardComponent) },
       { path: 'calendar', loadComponent: () => import('./features/calendar/calendar.component').then((m) => m.CalendarComponent) },
+      { path: 'availability', loadChildren: () => import('./features/availability/availability.routes').then((m) => m.AVAILABILITY_ROUTES) },
     ]
   },
   { path: 'register', loadComponent: () => import('./features/register/register.component').then((m) => m.RegisterComponent) },

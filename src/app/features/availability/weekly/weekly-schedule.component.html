@@ -1,0 +1,77 @@
+<section class="glass-panel flex min-h-0 flex-[1.4] flex-col rounded-3xl p-6">
+  <div class="mb-4 flex shrink-0 flex-wrap items-center justify-between gap-3">
+    <h2 class="text-lg font-extrabold text-gray-900">Working hours</h2>
+    <div class="flex gap-2">
+      <button type="button" (click)="preset([0, 1, 2, 3, 4])" class="glass-panel rounded-2xl px-4 py-2 text-xs font-bold text-gray-700 transition-colors hover:bg-white/70">Mon – Fri</button>
+      <button type="button" (click)="preset([0, 1, 2, 3, 4, 5, 6])" class="glass-panel rounded-2xl px-4 py-2 text-xs font-bold text-gray-700 transition-colors hover:bg-white/70">Every day</button>
+    </div>
+  </div>
+
+  <div class="min-h-0 flex-1 space-y-2.5 overflow-y-auto -mx-4 -mt-4 -mb-6 px-4 pt-4 pb-6">
+    @for (day of days(); track day.weekday) {
+      <div class="glass-card flex h-[3.75rem] items-center gap-4 rounded-2xl px-4">
+        <app-toggle [checked]="day.enabled" [label]="day.label" (checkedChange)="patchDay(day.weekday, { enabled: $event })" />
+        <span class="w-24 text-sm font-bold {{ day.enabled ? 'text-gray-900' : 'text-gray-400' }}">{{ day.label }}</span>
+        @if (day.enabled) {
+          <div class="flex flex-1 items-center gap-2.5">
+            <app-time-field class="flex-1" label="Start time" [value]="day.start" (valueChange)="patchDay(day.weekday, { start: $event })" />
+            <span class="text-gray-400">–</span>
+            <app-time-field class="flex-1" label="End time" [value]="day.end" (valueChange)="patchDay(day.weekday, { end: $event })" />
+          </div>
+        } @else {
+          <span class="flex-1 text-sm font-medium text-gray-400">Not working</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mt-4 flex shrink-0 flex-wrap items-end justify-between gap-4">
+    <div class="flex gap-3">
+      <div>
+        <label class="mb-1.5 block text-xs font-bold tracking-wide text-gray-500">Appointment length</label>
+        <select [class]="inputClass" (change)="slotMinutes.set(+valueOf($event))">
+          @for (m of slotOptions; track m) {
+            <option [value]="m" [selected]="m === slotMinutes()">{{ m }} min</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-xs font-bold tracking-wide text-gray-500">Generate ahead</label>
+        <select [class]="inputClass" (change)="horizonWeeks.set(+valueOf($event))">
+          @for (w of horizonOptions; track w) {
+            <option [value]="w" [selected]="w === horizonWeeks()">{{ w }} weeks</option>
+          }
+        </select>
+      </div>
+    </div>
+    <button
+      type="button"
+      (click)="save()"
+      [disabled]="saving()"
+      class="rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/30 transition-colors hover:bg-primary/90 disabled:opacity-50"
+    >
+      {{ saving() ? 'Saving…' : 'Save & generate slots' }}
+    </button>
+  </div>
+</section>
+
+<section class="glass-panel flex min-h-0 flex-1 flex-col rounded-3xl p-6">
+  <div class="mb-3 flex shrink-0 items-baseline justify-between gap-3">
+    <h2 class="text-lg font-extrabold text-gray-900">Next 2 weeks</h2>
+    <p class="text-xs font-bold text-gray-500">{{ totals().available }} available · {{ totals().booked }} booked</p>
+  </div>
+  <div class="min-h-0 flex-1 space-y-3 overflow-y-auto">
+    @for (day of upcoming(); track day.date) {
+      <div>
+        <p class="mb-1.5 text-xs font-bold tracking-wide text-gray-500">{{ day.label }}</p>
+        <div class="flex flex-wrap gap-1.5">
+          @for (slot of day.slots; track $index) {
+            <span class="rounded-lg px-2 py-1 text-[11px] font-bold {{ slot.booked ? 'bg-gray-200 text-gray-500' : 'bg-primary/10 text-primary' }}">{{ slot.time }}</span>
+          }
+        </div>
+      </div>
+    } @empty {
+      <p class="text-sm font-medium text-gray-400">No slots yet. Save your weekly schedule to generate them.</p>
+    }
+  </div>
+</section>
