@@ -1,0 +1,35 @@
+<app-page-header title="Availability" subtitle="Set when you work. Slots are generated for patients to book.">
+  <nav class="glass-panel flex gap-1 rounded-2xl p-1" aria-label="Availability sections">
+    @for (tab of tabs; track tab.route) {
+      <a
+        [routerLink]="tab.route"
+        routerLinkActive="bg-white text-primary shadow-sm"
+        [routerLinkActiveOptions]="{ exact: tab.exact }"
+        class="rounded-xl px-4 py-2 text-sm font-bold text-gray-500 transition-colors hover:text-gray-800"
+      >
+        {{ tab.label }}
+      </a>
+    }
+  </nav>
+</app-page-header>
+
+@switch (loadState()) {
+  @case ('loading') {
+    <div class="glass-panel min-h-0 flex-1 animate-pulse rounded-3xl"></div>
+  }
+  @case ('error') {
+    <div class="flex flex-1 flex-col items-center justify-center gap-3">
+      <p class="text-sm font-medium text-gray-500">No se pudo cargar tu disponibilidad.</p>
+      <button
+        type="button"
+        (click)="load()"
+        class="rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/30 transition-colors hover:bg-primary/90"
+      >
+        Reintentar
+      </button>
+    </div>
+  }
+  @case ('ready') {
+    <router-outlet />
+  }
+}
