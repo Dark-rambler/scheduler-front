@@ -12,7 +12,7 @@
   [cdkDropListData]="column().appointments"
   [cdkDropListEnterPredicate]="enterPredicate()"
   (cdkDropListDropped)="dropped.emit($event)"
-  class="flex min-h-0 flex-1 flex-col gap-3.5 overflow-y-auto px-4 pb-4 pt-2"
+  class="flex min-h-0 flex-1 flex-col gap-3.5 overflow-y-auto px-4 pb-6 pt-4"
 >
   @for (appointment of column().appointments; track appointment.id) {
     <app-board-card

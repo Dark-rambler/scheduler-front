@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { handleUri } from './core/interceptors/handle-uri.interceptor';
 import { errorAuthInterceptor } from './core/interceptors/error-auth.interceptor';
+import { AvailabilityRepository, LocalAvailabilityRepository } from './core/services/availability.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,5 +19,6 @@ export const appConfig: ApplicationConfig = {
         errorAuthInterceptor
       ])
     ),
+    { provide: AvailabilityRepository, useClass: LocalAvailabilityRepository },
   ]
 };

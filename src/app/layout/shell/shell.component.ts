@@ -12,6 +12,7 @@ export class ShellComponent {
   protected navItems: SidebarNavItem[] = [
     { label: 'Board', route: '/board', icon: 'board' },
     { label: 'Calendar', route: '/calendar', icon: 'calendar' },
+    { label: 'Availability', route: '/availability', icon: 'clock' },
     { label: 'Patients', route: '/patients', icon: 'patients' },
     { label: 'Analytics', route: '/analytics', icon: 'analytics' }
   ];

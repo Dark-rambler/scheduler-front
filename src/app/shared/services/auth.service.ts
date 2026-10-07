@@ -34,6 +34,19 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  // JWT `sub` is the user id; for a DOCTOR it is also the doctorId used by /schedules
+  public getUserId(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const sub = Number(jwtDecode<TokenPayload>(token).sub);
+      return Number.isFinite(sub) ? sub : null;
+    } catch {
+      return null;
+    }
+  }
+
   public logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
